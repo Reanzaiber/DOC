@@ -1,0 +1,961 @@
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedCareers - Healthcare Job Board</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f7f9;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #00897b 0%, #00695c 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: #a7ffeb;
+        }
+
+        .logo .cross {
+            color: #ff5252;
+            font-size: 2rem;
+        }
+
+        nav button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        nav button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #00897b 0%, #00695c 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 50px;
+            padding: 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1rem;
+            border-radius: 50px 0 0 50px;
+            outline: none;
+        }
+
+        .search-bar button {
+            background: #00897b;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: #00695c;
+        }
+
+        /* Filters */
+        .filters {
+            padding: 30px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #b2dfdb;
+            padding: 8px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            color: #00695c;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #00897b;
+            color: white;
+            border-color: #00897b;
+        }
+
+        /* Job Listings */
+        .jobs-section {
+            padding: 20px 0 60px;
+        }
+
+        .jobs-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .jobs-header h2 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .job-count {
+            color: #777;
+            font-size: 0.95rem;
+        }
+
+        .jobs-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            border-left: 4px solid #00897b;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .job-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .job-title {
+            font-size: 1.3rem;
+            color: #00695c;
+            margin-bottom: 5px;
+        }
+
+        .facility {
+            color: #00897b;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .salary {
+            background: #e0f2f1;
+            color: #00695c;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .job-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .job-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: #e0f2f1;
+            color: #00695c;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .job-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .job-meta {
+            color: #888;
+            font-size: 0.85rem;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .apply-btn {
+            background: #00897b;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .apply-btn:hover {
+            background: #00695c;
+            transform: scale(1.05);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 15px;
+            padding: 35px;
+            max-width: 580px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            color: #00695c;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #00897b;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #00897b;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #00695c;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+        }
+
+        .empty-state h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background: #004d40;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 1rem; }
+            .search-bar { flex-direction: column; border-radius: 15px; padding: 10px; }
+            .search-bar input { border-radius: 10px; margin-bottom: 10px; }
+            .search-bar button { border-radius: 10px; padding: 12px; }
+            .job-card-header { flex-direction: column; }
+            .form-row { grid-template-columns: 1fr; }
+            .header-content { justify-content: center; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo"><span class="cross">✚</span>Med<span>Careers</span></div>
+            <nav>
+                <button onclick="openModal()">+ Post a Medical Job</button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Healthcare Jobs That Matter</h1>
+            <p>Connect with top hospitals, clinics, labs, and medical facilities hiring across Kenya and beyond</p>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by role, facility, specialty, or keyword..." oninput="filterJobs()">
+                <button onclick="filterJobs()">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="filters" id="filters">
+            <button class="filter-btn active" data-category="all" onclick="setCategory('all', this)">All Roles</button>
+            <button class="filter-btn" data-category="Nursing" onclick="setCategory('Nursing', this)">Nursing</button>
+            <button class="filter-btn" data-category="Doctors" onclick="setCategory('Doctors', this)">Doctors</button>
+            <button class="filter-btn" data-category="Laboratory" onclick="setCategory('Laboratory', this)">Laboratory</button>
+            <button class="filter-btn" data-category="Pharmacy" onclick="setCategory('Pharmacy', this)">Pharmacy</button>
+            <button class="filter-btn" data-category="Radiology" onclick="setCategory('Radiology', this)">Radiology</button>
+            <button class="filter-btn" data-category="Administration" onclick="setCategory('Administration', this)">Admin</button>
+            <button class="filter-btn" data-category="Support" onclick="setCategory('Support', this)">Support Staff</button>
+        </div>
+    </div>
+
+    <section class="jobs-section">
+        <div class="container">
+            <div class="jobs-header">
+                <h2>Latest Healthcare Opportunities</h2>
+                <span class="job-count" id="jobCount"></span>
+            </div>
+            <div class="jobs-grid" id="jobsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Post Job Modal -->
+    <div class="modal-overlay" id="jobModal">
+        <div class="modal">
+            <h2>Post a Medical Job</h2>
+            <form id="jobForm" onsubmit="submitJob(event)">
+                <div class="form-group">
+                    <label>Job Title *</label>
+                    <input type="text" id="jobTitle" required placeholder="e.g. Registered Nurse - ICU">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Facility / Hospital *</label>
+                        <input type="text" id="jobCompany" required placeholder="e.g. Kenyatta National Hospital">
+                    </div>
+                    <div class="form-group">
+                        <label>Department / Category *</label>
+                        <select id="jobCategory" required>
+                            <option value="Nursing">Nursing</option>
+                            <option value="Doctors">Doctors</option>
+                            <option value="Laboratory">Laboratory</option>
+                            <option value="Pharmacy">Pharmacy</option>
+                            <option value="Radiology">Radiology</option>
+                            <option value="Administration">Administration</option>
+                            <option value="Support">Support Staff</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="jobLocation" placeholder="e.g. Nairobi, Kenya">
+                    </div>
+                    <div class="form-group">
+                        <label>Salary Range</label>
+                        <input type="text" id="jobSalary" placeholder="e.g. KES 80,000 - 120,000">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Employment Type</label>
+                        <select id="jobType">
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Locum">Locum</option>
+                            <option value="Internship">Internship</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Positions Available</label>
+                        <input type="number" id="jobPositions" min="1" value="1" placeholder="1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Job Description *</label>
+                    <textarea id="jobDescription" required placeholder="Describe the role, qualifications, certifications, and responsibilities..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Qualifications / Tags (comma-separated)</label>
+                    <input type="text" id="jobTags" placeholder="e.g. BSN, KRN, ACLS, ICU experience">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Post Job</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 MedCareers. Connecting healthcare professionals with facilities that need them.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample medical job data — facilities across Kenya & East Africa
+        let jobs = [
+            {
+                id: 1,
+                title: "Registered Nurse - Intensive Care Unit (ICU)",
+                company: "Kenyatta National Hospital",
+                category: "Nursing",
+                location: "Nairobi, Kenya",
+                salary: "KES 85,000 - 120,000",
+                type: "Full-time",
+                positions: 4,
+                description: "Provide critical care nursing to ICU patients. Monitor vital signs, administer medications, operate ventilators, and collaborate with the multidisciplinary team. Must be registered with the Nursing Council of Kenya.",
+                tags: ["BSN", "KRN License", "ACLS", "BLS", "ICU Experience"],
+                date: "2 days ago"
+            },
+            {
+                id: 2,
+                title: "Consultant Pediatrician",
+                company: "Aga Khan University Hospital",
+                category: "Doctors",
+                location: "Nairobi, Kenya",
+                salary: "KES 350,000 - 500,000",
+                type: "Full-time",
+                positions: 1,
+                description: "Provide specialist pediatric care in both inpatient and outpatient settings. Conduct ward rounds, supervise residents, and participate in teaching programs. Must hold MMed in Pediatrics and valid KMPDC registration.",
+                tags: ["MBChB", "MMed Pediatrics", "KMPDC", "5+ years"],
+                date: "1 day ago"
+            },
+            {
+                id: 3,
+                title: "Medical Laboratory Technologist",
+                company: "Nairobi Hospital",
+                category: "Laboratory",
+                location: "Nairobi, Kenya",
+                salary: "KES 65,000 - 90,000",
+                type: "Full-time",
+                positions: 2,
+                description: "Perform hematology, biochemistry, microbiology, and serology tests. Operate and maintain lab equipment, ensure quality control, and report accurate results to clinicians. KMLTTB registration required.",
+                tags: ["BSc MLS", "KMLTTB", "Hematology", "Microbiology"],
+                date: "3 days ago"
+            },
+            {
+                id: 4,
+                title: "Clinical Pharmacist",
+                company: "Moi Teaching and Referral Hospital",
+                category: "Pharmacy",
+                location: "Eldoret, Kenya",
+                salary: "KES 95,000 - 140,000",
+                type: "Full-time",
+                positions: 2,
+                description: "Dispense medications, counsel patients, review prescriptions for interactions, and manage pharmacy inventory. Support antimicrobial stewardship programs. Must be registered by the Pharmacy and Poisons Board.",
+                tags: ["BPharm", "PPB License", "Oncology", "Clinical Pharmacy"],
+                date: "4 days ago"
+            },
+            {
+                id: 5,
+                title: "Radiographer - CT & MRI",
+                company: "The Karen Hospital",
+                category: "Radiology",
+                location: "Nairobi, Kenya",
+                salary: "KES 75,000 - 110,000",
+                type: "Full-time",
+                positions: 1,
+                description: "Perform CT scans and MRI imaging with precision and patient safety. Prepare patients, operate imaging equipment, and produce diagnostic-quality images. Must be registered with the Radiation Protection Board.",
+                tags: ["BSc Radiography", "CT", "MRI", "RPB License"],
+                date: "1 week ago"
+            },
+            {
+                id: 6,
+                title: "Hospital Administrator",
+                company: "MP Shah Hospital",
+                category: "Administration",
+                location: "Nairobi, Kenya",
+                salary: "KES 150,000 - 220,000",
+                type: "Full-time",
+                positions: 1,
+                description: "Oversee daily hospital operations, manage budgets, coordinate departments, and ensure compliance with regulatory standards. Lead quality improvement initiatives and staff performance management.",
+                tags: ["MBA Health Mgmt", "Leadership", "HR", "Budgeting"],
+                date: "5 days ago"
+            },
+            {
+                id: 7,
+                title: "Midwife - Maternity Ward",
+                company: "Pumwani Maternity Hospital",
+                category: "Nursing",
+                location: "Nairobi, Kenya",
+                salary: "KES 70,000 - 95,000",
+                type: "Full-time",
+                positions: 6,
+                description: "Provide comprehensive maternal and newborn care during labor, delivery, and postpartum. Conduct antenatal and postnatal checkups, and support breastfeeding education. KRN and Kenya Registered Midwife (KRM) required.",
+                tags: ["KRN", "KRM", "Maternal Health", "Neonatal Care"],
+                date: "Just now"
+            },
+            {
+                id: 8,
+                title: "Physiotherapist",
+                company: "Coast General Teaching & Referral Hospital",
+                category: "Support",
+                location: "Mombasa, Kenya",
+                salary: "KES 60,000 - 85,000",
+                type: "Contract",
+                positions: 2,
+                description: "Assess and treat patients with musculoskeletal, neurological, and post-surgical conditions. Develop rehabilitation plans, educate patients on home exercises, and document progress.",
+                tags: ["BSc Physiotherapy", "Rehabilitation", "Sports Injury"],
+                date: "2 days ago"
+            },
+            {
+                id: 9,
+                title: "Phlebotomist / Sample Collection Nurse",
+                company: "Pathologists Lancet Kenya",
+                category: "Laboratory",
+                location: "Kisumu, Kenya",
+                salary: "KES 45,000 - 60,000",
+                type: "Part-time",
+                positions: 3,
+                description: "Collect blood, urine, and other medical samples from patients. Label, handle, and transport specimens correctly. Maintain infection control and ensure a comfortable patient experience.",
+                tags: ["Phlebotomy", "Sample Collection", "Customer Care"],
+                date: "6 days ago"
+            },
+            {
+                id: 10,
+                title: "Locum Medical Officer",
+                company: "Equity Afia Medical Centres",
+                category: "Doctors",
+                location: "Nakuru, Kenya",
+                salary: "KES 8,000 - 12,000 per day",
+                type: "Locum",
+                positions: 2,
+                description: "Provide primary healthcare services in outpatient clinics. Diagnose and treat common illnesses, refer complex cases, and maintain accurate patient records. Ideal for flexible GPs.",
+                tags: ["MBChB", "KMPDC", "Primary Care", "Flexible"],
+                date: "3 days ago"
+            },
+            {
+                id: 11,
+                title: "Biomedical Equipment Technician",
+                company: "Gertrude's Children's Hospital",
+                category: "Support",
+                location: "Nairobi, Kenya",
+                salary: "KES 80,000 - 110,000",
+                type: "Full-time",
+                positions: 1,
+                description: "Install, maintain, troubleshoot, and repair medical equipment including monitors, ventilators, and lab analyzers. Coordinate with vendors for servicing and keep maintenance logs.",
+                tags: ["Diploma Biomedical Eng", "Equipment Maintenance", "Electronics"],
+                date: "1 week ago"
+            },
+            {
+                id: 12,
+                title: "Nurse Anaesthetist",
+                company: "Tenwek Hospital",
+                category: "Nursing",
+                location: "Bomet, Kenya",
+                salary: "KES 120,000 - 160,000",
+                type: "Full-time",
+                positions: 2,
+                description: "Administer anesthesia for surgical procedures, monitor patients during surgery and recovery, and manage pain. Requires Kenya Registered Nurse Anaesthetist (KRNA) certification and theater experience.",
+                tags: ["KRNA", "Anesthesia", "Theater", "Critical Care"],
+                date: "4 days ago"
+            }
+        ];
+
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let nextId = 13;
+
+        // Render jobs
+        function renderJobs() {
+            const grid = document.getElementById('jobsGrid');
+            const filtered = jobs.filter(job => {
+                const matchesCategory = currentCategory === 'all' || job.category === currentCategory;
+                const q = searchQuery.toLowerCase();
+                const matchesSearch = !q ||
+                    job.title.toLowerCase().includes(q) ||
+                    job.company.toLowerCase().includes(q) ||
+                    job.description.toLowerCase().includes(q) ||
+                    job.location.toLowerCase().includes(q) ||
+                    job.tags.some(t => t.toLowerCase().includes(q));
+                return matchesCategory && matchesSearch;
+            });
+
+            document.getElementById('jobCount').textContent =
+                `${filtered.length} position${filtered.length !== 1 ? 's' : ''} found`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No positions found</h3>
+                        <p>Try a different role, specialty, or facility name</p>
+                    </div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(job => `
+                <div class="job-card">
+                    <div class="job-card-header">
+                        <div>
+                            <div class="job-title">${escapeHtml(job.title)}</div>
+                            <div class="facility">🏥 ${escapeHtml(job.company)}</div>
+                        </div>
+                        ${job.salary ? `<div class="salary">${escapeHtml(job.salary)}</div>` : ''}
+                    </div>
+                    <p class="job-description">${escapeHtml(job.description)}</p>
+                    <div class="job-tags">
+                        ${job.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
+                    </div>
+                    <div class="job-footer">
+                        <div class="job-meta">
+                            <span>📍 ${escapeHtml(job.location || 'Not specified')}</span>
+                            <span>💼 ${escapeHtml(job.type || 'Full-time')}</span>
+                            <span>👥 ${job.positions || 1} position${(job.positions || 1) > 1 ? 's' : ''}</span>
+                            <span>🕒 ${escapeHtml(job.date)}</span>
+                        </div>
+                        <button class="apply-btn" onclick="applyJob(${job.id})">Apply</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function filterJobs() {
+            searchQuery = document.getElementById('searchInput').value;
+            renderJobs();
+        }
+
+        function setCategory(category, btn) {
+            currentCategory = category;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderJobs();
+        }
+
+        function applyJob(id) {
+            const job = jobs.find(j => j.id === id);
+            alert(`Application submitted for "${job.title}"\nFacility: ${job.company}\n\n(In a real app, this would open an application form with credential upload.)`);
+        }
+
+        // Modal
+        function openModal() {
+            document.getElementById('jobModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('jobModal').classList.remove('active');
+            document.getElementById('jobForm').reset();
+        }
+
+        function submitJob(e) {
+            e.preventDefault();
+            const tagsInput = document.getElementById('jobTags').value;
+            const positions = parseInt(document.getElementById('jobPositions').value) || 1;
+            const newJob = {
+                id: nextId++,
+                title: document.getElementById('jobTitle').value.trim(),
+                company: document.getElementById('jobCompany').value.trim(),
+                category: document.getElementById('jobCategory').value,
+                location: document.getElementById('jobLocation').value.trim(),
+                salary: document.getElementById('jobSalary').value.trim(),
+                type: document.getElementById('jobType').value,
+                positions: positions,
+                description: document.getElementById('jobDescription').value.trim(),
+                tags: tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(Boolean) : [],
+                date: "Just now"
+            };
+            jobs.unshift(newJob);
+            closeModal();
+            renderJobs();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => alert(`Job "${newJob.title}" at ${newJob.company} posted successfully!`), 300);
+        }
+
+        // Close modal on overlay click
+        document.getElementById('jobModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Initial render
+        renderJobs();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
